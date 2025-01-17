@@ -4,7 +4,8 @@ const positionsSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique:true,
     },
     company: {
         type: String,
@@ -23,24 +24,27 @@ const positionsSchema = new mongoose.Schema({
         },
         required: true
     },
-    skills: {
-        type: [String],
+    skills: [{
+
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'skills',
         required: true
-    },
+    }],
+    skills:[{
+        type:String,
+        required:true,
+    }],
     additionalNotes: {
         type: String,
         
     },
     rounds: {
         type: [
-            {
-                name: { type: String, required: true, trim: true },
-                // description: { type: String, required: true, trim: true }
-            }
+            String
         ],
         
     }
-});
+},{timestamps:true});
 
 const PositionModel = mongoose.model("positions", positionsSchema);
 
